@@ -22,7 +22,7 @@
 
             <div class="d-flex justify-content-end">
               {{-- <a href="" class="btn btn-secondary">ย้อนกลับ</a> --}}
-              <a href="" class="btn btn-outline-success">เพิ่มข้อมูล</a>
+              <a href="{{ route('test.create') }}" class="btn btn-success">เพิ่มข้อมูล</a>
             </div>
 
           </div>
@@ -40,25 +40,35 @@
         </div>
         <div class="card-body">
 
+
+          @if (session()->has('Success'))
+            <div class="alert alert-success" role="alert">
+              <strong>{{ session()->get('Success') }}</strong>
+            </div>
+          @endif
+
+
+
           <table class="table table-striped table-bordered ">
             <thead>
               <tr>
-                <th>asdf</th>
-                <th>asdf</th>
-                <th>asdfsdfdf</th>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Manage</th>
               </tr>
             </thead>
             <tbody>
 
-              <?php
-              $arr = ['111', '222', '333', '444', '5555'];
-              ?>
-
-              @foreach ($arr as $key => $val)
+              @foreach ($Test as $key => $val)
                 <tr>
                   <td>{{ ++$key }}</td>
-                  <td>{{ $val}}</td>
-                  <td></td>
+                  <td>{{ $val->fname }}</td>
+                  <td>{{ $val->lname }}</td>
+                  <td>
+                    <a href="{{ route('test.edit', ['id' => $val->id]) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                    <a href="{{ route('test.delete', ['id' => $val->id]) }}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                  </td>
                 </tr>
               @endforeach
 

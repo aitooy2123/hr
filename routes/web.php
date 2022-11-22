@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     // return view('welcome');
@@ -19,10 +20,18 @@ Route::get('/', function () {
     return view('layouts.theme.COPY');
 });
 
-Route::get('/test', function () {
-    return view('layouts.test');
-})->name('test');
+// Route::get('/test', function () {return view('layouts.test');})->name('test');
 
-Auth::routes();
+Route::get('/test', [HomeController::class, 'test'])->name('test');
+Route::get('/test/create', function () {return view('layouts.test_create');})->name('test.create');
+Route::post('/test/insert', [HomeController::class, 'test_insert'])->name('test.insert');
+Route::get('/test/edit/{id}', [HomeController::class, 'test_edit'])->name('test.edit');
+Route::post('/test/update', [HomeController::class, 'test_update'])->name('test.update');
+Route::get('/test/delete/{id}', [HomeController::class, 'test_delete'])->name('test.delete');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
